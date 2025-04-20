@@ -16,7 +16,7 @@ public class BehaviourPlayer : MonoBehaviour
     private float _jumpHeight = 3.0f;
     private Vector3 _velocity;
     
-    private readonly float _limiteRotationX = 70.0f;
+    private readonly float _limitRotationX = 70.0f;
     private readonly float _moveSpeed = 10.0f;
 
     private void Update()
@@ -32,7 +32,7 @@ public class BehaviourPlayer : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * _mouseSensibility * Time.deltaTime;
         
         _xRotation -= mouseY;
-        _xRotation = Mathf.Clamp(_xRotation, -_limiteRotationX, _limiteRotationX);
+        _xRotation = Mathf.Clamp(_xRotation, -_limitRotationX, _limitRotationX);
         
         camera.transform.localRotation = Quaternion.Euler(_xRotation,0.0f,0.0f);
         gameObject.transform.Rotate(Vector3.up * mouseX);
