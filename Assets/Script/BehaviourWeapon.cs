@@ -1,9 +1,9 @@
+using System;
 using UnityEngine;
 
 public class BehaviourWeapon : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPrefab;
-
     [SerializeField] private GameObject cannonWeapon;
 
     private void Update()
@@ -17,6 +17,7 @@ public class BehaviourWeapon : MonoBehaviour
         {
             GameObject bullet = Instantiate(bulletPrefab);
             bullet.transform.position = cannonWeapon.transform.position;
+            bullet.GetComponent<BehaviourBullet>().Direction = cannonWeapon.transform.up;
         }
     }
 }

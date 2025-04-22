@@ -4,7 +4,7 @@ using UnityEngine;
 public class BaseBullet : ScriptableObject
 { 
     [SerializeField]
-    protected int damage;
+    public int damage;
     [SerializeField]
-    protected float speed;
+    public float speed;
 }
