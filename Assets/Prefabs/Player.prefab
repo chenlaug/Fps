@@ -665,3 +665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2700617730588323564, guid: fe3c3670c27091d42ab702dda555753f, type: 3}
   cannonWeapon: {fileID: 5798385670792285065}
+  baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
+  ChamberSize: 0
+  ChamberCurrent: 0
+  NumberBulletLeft: 0
