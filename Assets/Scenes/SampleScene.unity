@@ -507,6 +507,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &522431830 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6047804791992608877, guid: 22df41556e7140542bfac9332079c9ce, type: 3}
+  m_PrefabInstance: {fileID: 1197456365}
+  m_PrefabAsset: {fileID: 0}
 --- !u!43 &624586669
 Mesh:
   m_ObjectHideFlags: 0
@@ -771,6 +776,26 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6160577234277562702, guid: 22df41556e7140542bfac9332079c9ce, type: 3}
   m_PrefabInstance: {fileID: 1197456365}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1000557286 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2305827370813833862, guid: 22df41556e7140542bfac9332079c9ce, type: 3}
+  m_PrefabInstance: {fileID: 1197456365}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1000557291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000557286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5627e6494f9be249ae593ed7088de4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
+  cannonWeapon: {fileID: 522431830}
+  baseWeapon: {fileID: 11400000, guid: 675ad4828d0b1e44f98133724d5ef29c, type: 2}
 --- !u!1001 &1197456365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -846,7 +871,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2305827370813833862, guid: 22df41556e7140542bfac9332079c9ce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1000557291}
   m_SourcePrefab: {fileID: 100100000, guid: 22df41556e7140542bfac9332079c9ce, type: 3}
 --- !u!43 &1305780661
 Mesh:

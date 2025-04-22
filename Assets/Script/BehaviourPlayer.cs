@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BehaviourPlayer : MonoBehaviour
@@ -6,6 +7,7 @@ public class BehaviourPlayer : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     [SerializeField] private GameObject groundCheck;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private List<GameObject> weapons = new List<GameObject>();
     
     private float _xRotation;
     private float _mouseSensibility = 100f;
@@ -25,6 +27,7 @@ public class BehaviourPlayer : MonoBehaviour
         BehaviourPlayerMove();
         CheckGround();
         HandleJump();
+        SwitchWeapon();
     }
     private void BehaviourPlayerLook()
     {
@@ -63,6 +66,23 @@ public class BehaviourPlayer : MonoBehaviour
         if (Input.GetButtonDown("Jump") && _isGrounded)
         {
             _velocity.y = Mathf.Sqrt(_jumpHeight * -2.0f * _gravity);
+        }
+    }
+
+    private void SwitchWeapon()
+    {
+        if (weapons.Count > 0 && Input.GetKeyDown(KeyCode.Q))
+        {
+            if (weapons[0].activeSelf)
+            {
+                weapons[0].SetActive(false);
+                weapons[1].SetActive(true);
+            }
+            else if (weapons[1].activeSelf)
+            {
+                weapons[1].SetActive(false);
+                weapons[0].SetActive(true);
+            }
         }
     }
 }
