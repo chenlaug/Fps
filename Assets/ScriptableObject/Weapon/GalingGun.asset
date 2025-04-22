@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d60307d6e1f68541a35f011822f1a1a, type: 3}
   m_Name: GalingGun
   m_EditorClassIdentifier: 
-  ChamberSize: 30
-  NumberBulletLeft: 250
+  chamberSize: 30
+  numberBulletLeft: 250
+  weaponType: 1

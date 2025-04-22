@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5727857847764427846}
   - component: {fileID: 774054600091456403}
   - component: {fileID: 7452943019652970511}
+  - component: {fileID: 1617040795845978672}
   m_Layer: 0
   m_Name: WeaponGatlingGun
   m_TagString: Untagged
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d48f07e890558c445ba17cad14295709, type: 2}
+  - {fileID: 2100000, guid: f975b4afc2a165040b00d6feb4008d8f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,6 +109,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &1617040795845978672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2305827370813833862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5627e6494f9be249ae593ed7088de4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 2700617730588323564, guid: e785975dc0f13fe4e9c01db093dc2e8f, type: 3}
+  cannonWeapon: {fileID: 6047804791992608877}
+  baseWeapon: {fileID: 11400000, guid: 675ad4828d0b1e44f98133724d5ef29c, type: 2}
 --- !u!1 &3759854638796346222
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,7 +266,7 @@ CharacterController:
   m_Height: 2.8
   m_Radius: 0.6
   m_SlopeLimit: 45
-  m_StepOffset: 0.4
+  m_StepOffset: 0.6
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -272,6 +288,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  weapons:
+  - {fileID: 8369444968469400675}
+  - {fileID: 2305827370813833862}
 --- !u!1 &5798385670792285065
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,6 +685,3 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2700617730588323564, guid: fe3c3670c27091d42ab702dda555753f, type: 3}
   cannonWeapon: {fileID: 5798385670792285065}
   baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
-  ChamberSize: 0
-  ChamberCurrent: 0
-  NumberBulletLeft: 0
