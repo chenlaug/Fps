@@ -27,17 +27,25 @@ public class BehaviourWeapon : MonoBehaviour
 
     private void Update()
     {
-        ShootPlayer();
-        AutoReload();
-        ManuelReload();
+        if (gameObject.layer == 8) // Player
+        {
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+                ShootPlayer();
+            if (Input.GetMouseButtonDown(1))
+                ManualReload();
+        }
+
+        if (_chamberCurrent <= 0 && _numberBulletLeft > 0)
+            AutoReload();
     }
 
     private void CreateBullet()
     {
         if (_chamberCurrent <= 0) return;
         GameObject bullet = Instantiate(bulletPrefab);
-        bullet.transform.position = cannonWeapon.transform.position;
-        bullet.GetComponent<BehaviourBullet>().Direction = cannonWeapon.transform.up;
+        Transform cannonTransform = cannonWeapon.transform;
+        bullet.transform.position = cannonTransform.position;
+        bullet.GetComponent<BehaviourBullet>().Direction = cannonTransform.up;
         _chamberCurrent--;
     }
 
@@ -58,7 +66,7 @@ public class BehaviourWeapon : MonoBehaviour
         if (_chamberCurrent <= 0 && _numberBulletLeft > 0) Reload();
     }
 
-    private void ManuelReload()
+    private void ManualReload()
     {
         if (Input.GetMouseButtonDown(1)) Reload();
     }
