@@ -13,9 +13,14 @@ public class BehaviourEnemy : MonoBehaviour
     [SerializeField] private LayerMask playerMask;
 
     private float _currentHealth;
-    [SerializeField] private Vector3 _walkPoint;
+    private Vector3 _walkPoint;
     private const float WalkPointRange = 100.0f;
     private bool _walkPointSet;
+
+    private float _sightRange = 30.0f;
+    private float _attackRange = 8.0f;
+    private bool _playerIsinSight;
+    private bool _playerIsInAttackRange;
 
     private void Awake()
     {
@@ -24,7 +29,8 @@ public class BehaviourEnemy : MonoBehaviour
 
     private void Update()
     {
-        Patrolling();
+        CheckSignt();
+        CheckStateEnemy();
     }
 
     private void SetUpEnemy()
@@ -63,5 +69,29 @@ public class BehaviourEnemy : MonoBehaviour
             gameObject.transform.position.y,
             gameObject.transform.position.z + randomZ);
         if (Physics.Raycast(_walkPoint, -transform.up, 2f, ground)) _walkPointSet = true;
+    }
+
+    private void CheckSignt()
+    {
+        _playerIsinSight = Physics.CheckSphere(gameObject.transform.position, _sightRange, playerMask);
+        _playerIsInAttackRange = Physics.CheckSphere(gameObject.transform.position, _attackRange, playerMask);
+    }
+
+    private void ChasePlayer()
+    {
+        agent.SetDestination(player.position);
+    }
+
+    private void AttackPlayer()
+    {
+        agent.SetDestination(gameObject.transform.position);
+        gameObject.transform.LookAt(player.position);
+    }
+
+    private void CheckStateEnemy()
+    {
+        if (!_playerIsinSight && !_playerIsInAttackRange) Patrolling();
+        if (_playerIsinSight && !_playerIsInAttackRange) ChasePlayer();
+        if (_playerIsinSight && _playerIsInAttackRange) AttackPlayer();
     }
 }
