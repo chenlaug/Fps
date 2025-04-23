@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5727857847764427846}
   - component: {fileID: 774054600091456403}
   - component: {fileID: 7452943019652970511}
+  - component: {fileID: 4489451476483723281}
   m_Layer: 7
   m_Name: WeaponGatlingGun
   m_TagString: Untagged
@@ -108,6 +109,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &4489451476483723281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2305827370813833862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5627e6494f9be249ae593ed7088de4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 2700617730588323564, guid: e785975dc0f13fe4e9c01db093dc2e8f, type: 3}
+  cannonWeapon: {fileID: 6047804791992608877}
+  baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
+  pivotWeapon: {fileID: 0}
 --- !u!1 &3759854638796346222
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,15 +305,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseEnemy: {fileID: 11400000, guid: c7cd5f5f0e5b11848a1a63e4f7193b83, type: 2}
   agent: {fileID: 699722724955185603}
+  weaponSimple: {fileID: 8369444968469400675}
+  weaponMultiple: {fileID: 2305827370813833862}
   player: {fileID: 0}
   ground:
     serializedVersion: 2
     m_Bits: 64
   playerMask:
     serializedVersion: 2
-    m_Bits: 0
-  weaponSimple: {fileID: 8369444968469400675}
-  weaponMultiple: {fileID: 2305827370813833862}
+    m_Bits: 256
 --- !u!1 &5798385670792285065
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,7 +417,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8373610791796772321}
   m_Layer: 7
-  m_Name: Main Camera
+  m_Name: PivotWeapon
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -518,6 +535,7 @@ GameObject:
   - component: {fileID: 6563155108095734361}
   - component: {fileID: 2944534828868656717}
   - component: {fileID: 327409325562240830}
+  - component: {fileID: 7120617668013953498}
   m_Layer: 7
   m_Name: WeaponGun
   m_TagString: Untagged
@@ -614,3 +632,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &7120617668013953498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369444968469400675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5627e6494f9be249ae593ed7088de4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 2700617730588323564, guid: fe3c3670c27091d42ab702dda555753f, type: 3}
+  cannonWeapon: {fileID: 5798385670792285065}
+  baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
+  pivotWeapon: {fileID: 0}

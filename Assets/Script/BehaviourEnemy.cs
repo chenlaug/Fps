@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -17,11 +18,11 @@ public class BehaviourEnemy : MonoBehaviour
     private const float WalkPointRange = 100.0f;
     private bool _walkPointSet;
 
-    private float _sightRange = 30.0f;
-    private float _attackRange = 8.0f;
+    private const float SightRange = 30.0f;
+    private const float AttackRange = 8.0f;
     private bool _playerIsinSight;
     private bool _playerIsInAttackRange;
-
+    private BehaviourWeapon _behavioursWeapon;
     private void Awake()
     {
         SetUpEnemy();
@@ -29,7 +30,7 @@ public class BehaviourEnemy : MonoBehaviour
 
     private void Update()
     {
-        CheckSignt();
+        CheckSign();
         CheckStateEnemy();
     }
 
@@ -39,15 +40,26 @@ public class BehaviourEnemy : MonoBehaviour
         agent.angularSpeed = baseEnemy.baseAngularSpeed;
         agent.acceleration = baseEnemy.baseAcceleration;
         _currentHealth = baseEnemy.baseHealth;
-        if (baseEnemy.baseWeaponChoose == WeaponType.SimpleShoot)
+        
+        weaponSimple.SetActive(false);
+        weaponMultiple.SetActive(false);
+        _behavioursWeapon = null;
+        
+        switch (baseEnemy.baseWeaponChoose)
         {
-            weaponSimple.SetActive(true);
-            weaponMultiple.SetActive(false);
-        }
-        else if (baseEnemy.baseWeaponChoose == WeaponType.MultipleShoot)
-        {
-            weaponMultiple.SetActive(true);
-            weaponSimple.SetActive(false);
+            case WeaponType.SimpleShoot:
+                weaponSimple.SetActive(true);
+                weaponMultiple.SetActive(false);
+                _behavioursWeapon = weaponSimple.GetComponent<BehaviourWeapon>();
+                break;
+            case WeaponType.MultipleShoot:
+                weaponMultiple.SetActive(true);
+                weaponSimple.SetActive(false);
+                _behavioursWeapon = weaponMultiple.GetComponent<BehaviourWeapon>();
+                break;
+            case WeaponType.None:
+            default:
+                break;
         }
     }
 
@@ -71,10 +83,10 @@ public class BehaviourEnemy : MonoBehaviour
         if (Physics.Raycast(_walkPoint, -transform.up, 2f, ground)) _walkPointSet = true;
     }
 
-    private void CheckSignt()
+    private void CheckSign()
     {
-        _playerIsinSight = Physics.CheckSphere(gameObject.transform.position, _sightRange, playerMask);
-        _playerIsInAttackRange = Physics.CheckSphere(gameObject.transform.position, _attackRange, playerMask);
+        _playerIsinSight = Physics.CheckSphere(gameObject.transform.position, SightRange, playerMask);
+        _playerIsInAttackRange = Physics.CheckSphere(gameObject.transform.position, AttackRange, playerMask);
     }
 
     private void ChasePlayer()
@@ -86,6 +98,7 @@ public class BehaviourEnemy : MonoBehaviour
     {
         agent.SetDestination(gameObject.transform.position);
         gameObject.transform.LookAt(player.position);
+        _behavioursWeapon.ShootEnemy();
     }
 
     private void CheckStateEnemy()
