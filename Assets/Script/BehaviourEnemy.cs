@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class BehaviourEnemy : MonoBehaviour
@@ -13,7 +14,7 @@ public class BehaviourEnemy : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask playerMask;
 
-    private float _currentHealth;
+    [SerializeField] private int _currentHealth;
     private Vector3 _walkPoint;
     private const float WalkPointRange = 100.0f;
     private bool _walkPointSet;
@@ -115,5 +116,10 @@ public class BehaviourEnemy : MonoBehaviour
     public void RefillAmmo()
     {
         _behavioursWeapon.ResetAmmo();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _currentHealth -= damage;
     }
 }
