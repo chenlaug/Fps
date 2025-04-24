@@ -8,18 +8,18 @@ public class BehaviourPlayer : MonoBehaviour
     [SerializeField] private GameObject groundCheck;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private List<GameObject> weapons = new List<GameObject>();
-    
+
     private float _xRotation;
-    private float _mouseSensibility = 100f;
-    
-    private float _groundDistance = 0.4f;
-    private readonly float _gravity = -9.81f;
+    private const float MouseSensibility = 100f;
+
+    private const float GroundDistance = 0.4f;
+    private const float Gravity = -9.81f;
     private bool _isGrounded;
-    private float _jumpHeight = 3.0f;
+    private const float JumpHeight = 3.0f;
     private Vector3 _velocity;
-    
-    private readonly float _limitRotationX = 70.0f;
-    private readonly float _moveSpeed = 10.0f;
+
+    private const float LimitRotationX = 70.0f;
+    private const float MoveSpeed = 10.0f;
 
     private void Update()
     {
@@ -29,35 +29,37 @@ public class BehaviourPlayer : MonoBehaviour
         HandleJump();
         SwitchWeapon();
     }
+
     private void BehaviourPlayerLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * _mouseSensibility * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * _mouseSensibility * Time.deltaTime;
-        
+        float mouseX = Input.GetAxis("Mouse X") * MouseSensibility * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * MouseSensibility * Time.deltaTime;
+
         _xRotation -= mouseY;
-        _xRotation = Mathf.Clamp(_xRotation, -_limitRotationX, _limitRotationX);
-        
-        camera.transform.localRotation = Quaternion.Euler(_xRotation,0.0f,0.0f);
+        _xRotation = Mathf.Clamp(_xRotation, -LimitRotationX, LimitRotationX);
+
+        camera.transform.localRotation = Quaternion.Euler(_xRotation, 0.0f, 0.0f);
         gameObject.transform.Rotate(Vector3.up * mouseX);
     }
+
     private void BehaviourPlayerMove()
     {
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
 
         Vector3 move = gameObject.transform.right * moveX + gameObject.transform.forward * moveZ;
-        characterController.Move(move * (_moveSpeed * Time.deltaTime));
+        characterController.Move(move * (MoveSpeed * Time.deltaTime));
     }
 
     private void CheckGround()
     {
-        _isGrounded = Physics.CheckSphere(groundCheck.transform.position,_groundDistance,groundMask);
+        _isGrounded = Physics.CheckSphere(groundCheck.transform.position, GroundDistance, groundMask);
         if (_isGrounded && _velocity.y < 0)
         {
             _velocity.y = -2.0f;
         }
-        
-        _velocity.y += _gravity * Time.deltaTime;
+
+        _velocity.y += Gravity * Time.deltaTime;
         characterController.Move(_velocity * Time.deltaTime);
     }
 
@@ -65,7 +67,7 @@ public class BehaviourPlayer : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && _isGrounded)
         {
-            _velocity.y = Mathf.Sqrt(_jumpHeight * -2.0f * _gravity);
+            _velocity.y = Mathf.Sqrt(JumpHeight * -2.0f * Gravity);
         }
     }
 
@@ -83,6 +85,13 @@ public class BehaviourPlayer : MonoBehaviour
                 weapons[1].SetActive(false);
                 weapons[0].SetActive(true);
             }
+        }
+    }
+    public void RefillAmmo()
+    {
+        foreach (var go in weapons)
+        {
+            go.GetComponent<BehaviourWeapon>().ResetAmmo();
         }
     }
 }

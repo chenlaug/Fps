@@ -9,9 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d60307d6e1f68541a35f011822f1a1a, type: 3}
-  m_Name: GalingGun
+  m_Script: {fileID: 11500000, guid: 509727cfe75e13346b3fa75707246818, type: 3}
+  m_Name: Enemy1
   m_EditorClassIdentifier: 
-  chamberSize: 30
-  numberBulletLeft: 250
-  weaponType: 2
+  baseHealth: 300
+  currentBaseHealth: 300
+  baseSpeed: 3.5
+  baseAcceleration: 8
+  baseAngularSpeed: 260
+  baseWeaponChoose: 2

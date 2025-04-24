@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chamberSize: 10
   numberBulletLeft: 100
-  weaponType: 0
+  weaponType: 1
