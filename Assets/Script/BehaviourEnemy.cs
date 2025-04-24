@@ -23,28 +23,28 @@ public class BehaviourEnemy : MonoBehaviour
     private bool _playerIsinSight;
     private bool _playerIsInAttackRange;
     private BehaviourWeapon _behavioursWeapon;
+    private Vector3 _supplyAmmoPoints;
+
     private void Awake()
     {
         SetUpEnemy();
     }
-
     private void Update()
     {
         CheckSign();
         CheckStateEnemy();
     }
-
     private void SetUpEnemy()
     {
         agent.speed = baseEnemy.baseSpeed;
         agent.angularSpeed = baseEnemy.baseAngularSpeed;
         agent.acceleration = baseEnemy.baseAcceleration;
         _currentHealth = baseEnemy.baseHealth;
-        
+        _supplyAmmoPoints = GameManager.Instance.RandomSupplyAmmoPoint();
         weaponSimple.SetActive(false);
         weaponMultiple.SetActive(false);
         _behavioursWeapon = null;
-        
+
         switch (baseEnemy.baseWeaponChoose)
         {
             case WeaponType.SimpleShoot:
@@ -62,7 +62,6 @@ public class BehaviourEnemy : MonoBehaviour
                 break;
         }
     }
-
     private void Patrolling()
     {
         if (!_walkPointSet) SearchWalkPoint();
@@ -71,7 +70,6 @@ public class BehaviourEnemy : MonoBehaviour
         var distanceToWalkPoint = transform.position - _walkPoint;
         if (distanceToWalkPoint.magnitude < 2.0f) _walkPointSet = false;
     }
-
     private void SearchWalkPoint()
     {
         var randomZ = Random.Range(-WalkPointRange, WalkPointRange);
@@ -82,29 +80,40 @@ public class BehaviourEnemy : MonoBehaviour
             gameObject.transform.position.z + randomZ);
         if (Physics.Raycast(_walkPoint, -transform.up, 2f, ground)) _walkPointSet = true;
     }
-
     private void CheckSign()
     {
         _playerIsinSight = Physics.CheckSphere(gameObject.transform.position, SightRange, playerMask);
         _playerIsInAttackRange = Physics.CheckSphere(gameObject.transform.position, AttackRange, playerMask);
     }
-
     private void ChasePlayer()
     {
         agent.SetDestination(player.position);
     }
-
     private void AttackPlayer()
     {
         agent.SetDestination(gameObject.transform.position);
         gameObject.transform.LookAt(player.position);
         _behavioursWeapon.ShootEnemy();
     }
-
+    private void SearchSupplyAmmo()
+    {
+        agent.SetDestination(_supplyAmmoPoints);
+    }
     private void CheckStateEnemy()
     {
-        if (!_playerIsinSight && !_playerIsInAttackRange) Patrolling();
-        if (_playerIsinSight && !_playerIsInAttackRange) ChasePlayer();
-        if (_playerIsinSight && _playerIsInAttackRange) AttackPlayer();
+        if (_behavioursWeapon.NumberBulletLeft > 0)
+        {
+            if (!_playerIsinSight && !_playerIsInAttackRange) Patrolling();
+            if (_playerIsinSight && !_playerIsInAttackRange) ChasePlayer();
+            if (_playerIsinSight && _playerIsInAttackRange) AttackPlayer();
+        }
+        else
+        {
+            SearchSupplyAmmo();
+        }
+    }
+    public void RefillAmmo()
+    {
+        _behavioursWeapon.ResetAmmo();
     }
 }

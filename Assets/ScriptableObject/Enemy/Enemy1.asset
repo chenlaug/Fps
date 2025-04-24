@@ -17,4 +17,4 @@ MonoBehaviour:
   baseSpeed: 3.5
   baseAcceleration: 8
   baseAngularSpeed: 260
-  baseWeaponChoose: 0
+  baseWeaponChoose: 2

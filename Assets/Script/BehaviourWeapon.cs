@@ -9,11 +9,11 @@ public class BehaviourWeapon : MonoBehaviour
     [SerializeField] private GameObject cannonWeapon;
     [SerializeField] private BaseWeapon baseWeapon;
     [SerializeField] private GameObject pivotWeapon;
-
-
+    
     private int _chamberSize;
     private int _chamberCurrent;
-    private int _numberBulletLeft;
+    [HideInInspector]
+    public int NumberBulletLeft { get; private set; }
 
     private bool _bulletIsCreate;
     private bool _enemyIsAiming;
@@ -22,7 +22,7 @@ public class BehaviourWeapon : MonoBehaviour
     {
         _chamberSize = baseWeapon.chamberSize;
         _chamberCurrent = _chamberSize;
-        _numberBulletLeft = baseWeapon.numberBulletLeft;
+        NumberBulletLeft = baseWeapon.numberBulletLeft;
     }
 
     private void Update()
@@ -35,7 +35,7 @@ public class BehaviourWeapon : MonoBehaviour
                 ManualReload();
         }
 
-        if (_chamberCurrent <= 0 && _numberBulletLeft > 0)
+        if (_chamberCurrent <= 0 && NumberBulletLeft > 0)
             AutoReload();
     }
 
@@ -51,19 +51,24 @@ public class BehaviourWeapon : MonoBehaviour
 
     private void Reload()
     {
-        if (_chamberCurrent >= _chamberSize || _numberBulletLeft <= 0)
+        if (_chamberCurrent >= _chamberSize || NumberBulletLeft <= 0)
             return;
 
         var neededAmmo = _chamberSize - _chamberCurrent;
-        var ammoToReload = Mathf.Min(neededAmmo, _numberBulletLeft);
+        var ammoToReload = Mathf.Min(neededAmmo, NumberBulletLeft);
 
         _chamberCurrent += ammoToReload;
-        _numberBulletLeft -= ammoToReload;
+        NumberBulletLeft -= ammoToReload;
     }
 
     private void AutoReload()
     {
-        if (_chamberCurrent <= 0 && _numberBulletLeft > 0) Reload();
+        if (_chamberCurrent <= 0 && NumberBulletLeft > 0) Reload();
+    }
+
+    public void ResetAmmo()
+    {
+        NumberBulletLeft = baseWeapon.numberBulletLeft;
     }
 
     private void ManualReload()
@@ -87,6 +92,7 @@ public class BehaviourWeapon : MonoBehaviour
         {
             StartCoroutine(RadomAim());
         }
+
         switch (baseWeapon.weaponType)
         {
             case WeaponType.SimpleShoot when !_bulletIsCreate:
@@ -108,7 +114,7 @@ public class BehaviourWeapon : MonoBehaviour
         yield return new WaitForFixedUpdate();
         _bulletIsCreate = false;
     }
-    
+
     private IEnumerator SimpleShooterCoroutine()
     {
         CreateBullet();
