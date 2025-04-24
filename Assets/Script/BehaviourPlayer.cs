@@ -20,6 +20,13 @@ public class BehaviourPlayer : MonoBehaviour
 
     private const float LimitRotationX = 70.0f;
     private const float MoveSpeed = 10.0f;
+    private const int BaseLife = 1000;
+    [SerializeField]private int _currentLife;
+
+    private void Awake()
+    {
+        _currentLife = BaseLife;
+    }
 
     private void Update()
     {
@@ -87,11 +94,17 @@ public class BehaviourPlayer : MonoBehaviour
             }
         }
     }
+
     public void RefillAmmo()
     {
         foreach (var go in weapons)
         {
             go.GetComponent<BehaviourWeapon>().ResetAmmo();
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _currentLife -= damage;
     }
 }

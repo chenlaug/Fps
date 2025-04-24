@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BehaviourBullet : MonoBehaviour
@@ -21,12 +18,22 @@ public class BehaviourBullet : MonoBehaviour
     {
         rb.velocity = _direction * (bullet.speed * Time.deltaTime);
     }
-    
+
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.layer == 6)
+        switch (other.gameObject.layer)
         {
-            Destroy(gameObject);
+            case 6: // Map
+                Destroy(gameObject);
+                break;
+            case 7: // Enemy
+                other.gameObject.GetComponentInParent<BehaviourEnemy>().TakeDamage(bullet.damage);
+                Destroy(gameObject);
+                break;
+            case 8: // Player
+                other.gameObject.GetComponentInParent<BehaviourPlayer>().TakeDamage(bullet.damage);
+                Destroy(gameObject);
+                break;
         }
     }
 }
