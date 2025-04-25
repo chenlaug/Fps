@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class BehaviourEnemy : MonoBehaviour
@@ -14,7 +12,7 @@ public class BehaviourEnemy : MonoBehaviour
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask playerMask;
 
-    [SerializeField] private int _currentHealth;
+    [SerializeField] private int currentHealth;
     private Vector3 _walkPoint;
     private const float WalkPointRange = 100.0f;
     private bool _walkPointSet;
@@ -40,7 +38,7 @@ public class BehaviourEnemy : MonoBehaviour
         agent.speed = baseEnemy.baseSpeed;
         agent.angularSpeed = baseEnemy.baseAngularSpeed;
         agent.acceleration = baseEnemy.baseAcceleration;
-        _currentHealth = baseEnemy.baseHealth;
+        currentHealth = baseEnemy.baseHealth;
         _supplyAmmoPoints = GameManager.Instance.RandomSupplyAmmoPoint();
         weaponSimple.SetActive(false);
         weaponMultiple.SetActive(false);
@@ -120,6 +118,6 @@ public class BehaviourEnemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _currentHealth -= damage;
+        currentHealth -= damage;
     }
 }

@@ -308,7 +308,7 @@ MonoBehaviour:
   agent: {fileID: 699722724955185603}
   weaponSimple: {fileID: 8369444968469400675}
   weaponMultiple: {fileID: 2305827370813833862}
-  player: {fileID: 0}
+  player: {fileID: 8064645065235621299, guid: 22df41556e7140542bfac9332079c9ce, type: 3}
   ground:
     serializedVersion: 2
     m_Bits: 64
