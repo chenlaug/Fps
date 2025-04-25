@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class BehaviourEnemy : MonoBehaviour
@@ -10,11 +9,11 @@ public class BehaviourEnemy : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject weaponSimple;
     [SerializeField] private GameObject weaponMultiple;
-    [SerializeField] private Transform player;
+    [SerializeField] private Transform playerPositionTransform;
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask playerMask;
 
-    [SerializeField] private int _currentHealth;
+    [SerializeField] private int currentHealth;
     private Vector3 _walkPoint;
     private const float WalkPointRange = 100.0f;
     private bool _walkPointSet;
@@ -25,22 +24,26 @@ public class BehaviourEnemy : MonoBehaviour
     private bool _playerIsInAttackRange;
     private BehaviourWeapon _behavioursWeapon;
     private Vector3 _supplyAmmoPoints;
+    [SerializeField] private Image healthBar;
 
     private void Awake()
     {
         SetUpEnemy();
     }
+
     private void Update()
     {
         CheckSign();
         CheckStateEnemy();
     }
+
     private void SetUpEnemy()
     {
+        playerPositionTransform = GameManager.Instance.PlayerSpawn.transform;
         agent.speed = baseEnemy.baseSpeed;
         agent.angularSpeed = baseEnemy.baseAngularSpeed;
         agent.acceleration = baseEnemy.baseAcceleration;
-        _currentHealth = baseEnemy.baseHealth;
+        currentHealth = baseEnemy.baseHealth;
         _supplyAmmoPoints = GameManager.Instance.RandomSupplyAmmoPoint();
         weaponSimple.SetActive(false);
         weaponMultiple.SetActive(false);
@@ -63,6 +66,7 @@ public class BehaviourEnemy : MonoBehaviour
                 break;
         }
     }
+
     private void Patrolling()
     {
         if (!_walkPointSet) SearchWalkPoint();
@@ -71,6 +75,7 @@ public class BehaviourEnemy : MonoBehaviour
         var distanceToWalkPoint = transform.position - _walkPoint;
         if (distanceToWalkPoint.magnitude < 2.0f) _walkPointSet = false;
     }
+
     private void SearchWalkPoint()
     {
         var randomZ = Random.Range(-WalkPointRange, WalkPointRange);
@@ -81,25 +86,30 @@ public class BehaviourEnemy : MonoBehaviour
             gameObject.transform.position.z + randomZ);
         if (Physics.Raycast(_walkPoint, -transform.up, 2f, ground)) _walkPointSet = true;
     }
+
     private void CheckSign()
     {
         _playerIsinSight = Physics.CheckSphere(gameObject.transform.position, SightRange, playerMask);
         _playerIsInAttackRange = Physics.CheckSphere(gameObject.transform.position, AttackRange, playerMask);
     }
+
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(playerPositionTransform.position);
     }
+
     private void AttackPlayer()
     {
         agent.SetDestination(gameObject.transform.position);
-        gameObject.transform.LookAt(player.position);
+        gameObject.transform.LookAt(playerPositionTransform.position);
         _behavioursWeapon.ShootEnemy();
     }
+
     private void SearchSupplyAmmo()
     {
         agent.SetDestination(_supplyAmmoPoints);
     }
+
     private void CheckStateEnemy()
     {
         if (_behavioursWeapon.NumberBulletLeft > 0)
@@ -113,6 +123,7 @@ public class BehaviourEnemy : MonoBehaviour
             SearchSupplyAmmo();
         }
     }
+
     public void RefillAmmo()
     {
         _behavioursWeapon.ResetAmmo();
@@ -120,6 +131,9 @@ public class BehaviourEnemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        _currentHealth -= damage;
+        currentHealth -= damage;
+        healthBar.fillAmount = currentHealth / (float)baseEnemy.baseHealth;
+        GameManager.Instance.CheckGameOver(currentHealth, gameObject);
+        GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.HitMarker);
     }
 }
