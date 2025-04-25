@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class BehaviourWeapon : MonoBehaviour
@@ -9,11 +11,10 @@ public class BehaviourWeapon : MonoBehaviour
     [SerializeField] private GameObject cannonWeapon;
     [SerializeField] private BaseWeapon baseWeapon;
     [SerializeField] private GameObject pivotWeapon;
-    
+    [SerializeField] private TextMeshProUGUI numberBulletUI;
     private int _chamberSize;
     private int _chamberCurrent;
-    [HideInInspector]
-    public int NumberBulletLeft { get; private set; }
+    [HideInInspector] public int NumberBulletLeft { get; private set; }
 
     private bool _bulletIsCreate;
     private bool _enemyIsAiming;
@@ -37,6 +38,7 @@ public class BehaviourWeapon : MonoBehaviour
 
         if (_chamberCurrent <= 0 && NumberBulletLeft > 0)
             AutoReload();
+        ShowNumberBullet();
     }
 
     private void CreateBullet()
@@ -78,11 +80,18 @@ public class BehaviourWeapon : MonoBehaviour
 
     private void ShootPlayer()
     {
-        if (gameObject.layer != 8) return; // 8 isn't the player 
+        if (gameObject.layer != 8 || GameManager.Instance.stateGame != GameManager.StateGame.OnGame)
+            return; // 8 isn't the player and not in game
         if (Input.GetMouseButtonDown(0) && baseWeapon.weaponType == WeaponType.SimpleShoot)
+        {
+            GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.FireSimple);
             CreateBullet();
+        }
         else if (Input.GetMouseButton(0) && baseWeapon.weaponType == WeaponType.MultipleShoot && !_bulletIsCreate)
+        {
+            GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.FireSimple);
             StartCoroutine(MultipleShootCoroutine());
+        }
     }
 
     public void ShootEnemy()
@@ -107,11 +116,19 @@ public class BehaviourWeapon : MonoBehaviour
         }
     }
 
+    private void ShowNumberBullet()
+    {
+        if (gameObject.layer == 8)
+        {
+            numberBulletUI.text = _chamberCurrent.ToString() + " / " + NumberBulletLeft.ToString();
+        }
+    }
+
     private IEnumerator MultipleShootCoroutine()
     {
         CreateBullet();
         _bulletIsCreate = true;
-        yield return new WaitForFixedUpdate();
+        yield return new WaitForSeconds(0.1f);
         _bulletIsCreate = false;
     }
 
