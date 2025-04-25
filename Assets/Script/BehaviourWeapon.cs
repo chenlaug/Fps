@@ -101,13 +101,14 @@ public class BehaviourWeapon : MonoBehaviour
         {
             StartCoroutine(RadomAim());
         }
-
         switch (baseWeapon.weaponType)
         {
             case WeaponType.SimpleShoot when !_bulletIsCreate:
+                GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.FireSimple);
                 StartCoroutine(SimpleShooterCoroutine());
                 break;
             case WeaponType.MultipleShoot when !_bulletIsCreate:
+                GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.FireSimple);
                 StartCoroutine(MultipleShootCoroutine());
                 break;
             case WeaponType.None:
