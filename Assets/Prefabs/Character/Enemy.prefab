@@ -125,6 +125,7 @@ MonoBehaviour:
   cannonWeapon: {fileID: 6047804791992608877}
   baseWeapon: {fileID: 11400000, guid: 675ad4828d0b1e44f98133724d5ef29c, type: 2}
   pivotWeapon: {fileID: 6279038237718505434}
+  numberBulletUI: {fileID: 0}
 --- !u!1 &3759854638796346222
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +316,8 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 256
-  _currentHealth: 0
+  currentHealth: 0
+  healthBar: {fileID: 218482016968268024}
 --- !u!1 &5798385670792285065
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,6 +754,7 @@ MonoBehaviour:
   cannonWeapon: {fileID: 5798385670792285065}
   baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
   pivotWeapon: {fileID: 6279038237718505434}
+  numberBulletUI: {fileID: 0}
 --- !u!1 &8412299752285819352
 GameObject:
   m_ObjectHideFlags: 0

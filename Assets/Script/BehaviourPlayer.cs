@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class BehaviourPlayer : MonoBehaviour
 {
@@ -21,7 +23,8 @@ public class BehaviourPlayer : MonoBehaviour
     private const float LimitRotationX = 70.0f;
     private const float MoveSpeed = 10.0f;
     private const int BaseLife = 1000;
-    [SerializeField]private int _currentLife;
+    private int _currentLife;
+    [SerializeField] private Image healthBar;
 
     private void Awake()
     {
@@ -106,5 +109,6 @@ public class BehaviourPlayer : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _currentLife -= damage;
+        healthBar.fillAmount = (float)_currentLife / (float)BaseLife;
     }
 }
