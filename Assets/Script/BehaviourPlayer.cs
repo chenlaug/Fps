@@ -111,5 +111,6 @@ public class BehaviourPlayer : MonoBehaviour
         _currentLife -= damage;
         healthBar.fillAmount = (float)_currentLife / (float)BaseLife;
         GameManager.Instance.CheckGameOver(_currentLife, gameObject);
+        GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.HitMarker);
     }
 }

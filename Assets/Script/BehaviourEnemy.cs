@@ -91,8 +91,6 @@ public class BehaviourEnemy : MonoBehaviour
     {
         _playerIsinSight = Physics.CheckSphere(gameObject.transform.position, SightRange, playerMask);
         _playerIsInAttackRange = Physics.CheckSphere(gameObject.transform.position, AttackRange, playerMask);
-        Debug.Log($"[Enemy] PlayerInSight: {_playerIsinSight}, InAttackRange: {_playerIsInAttackRange}");
-
     }
 
     private void ChasePlayer()
@@ -136,5 +134,6 @@ public class BehaviourEnemy : MonoBehaviour
         currentHealth -= damage;
         healthBar.fillAmount = currentHealth / (float)baseEnemy.baseHealth;
         GameManager.Instance.CheckGameOver(currentHealth, gameObject);
+        GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.HitMarker);
     }
 }
