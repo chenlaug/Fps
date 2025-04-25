@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         OnGame,
         OnPause,
         OnOption,
+        OnGameOver,
     }
 
     [SerializeField] private List<Transform> supplyAmmoPoints = new List<Transform>();
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject enemyPrefab;
     private GameObject _playerSpawn;
+    public GameObject PlayerSpawn => _playerSpawn;
 
     private static GameManager _gameManagerInstance;
     [HideInInspector] public StateGame stateGame = StateGame.OnStart;
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
     {
         HandlePause();
     }
+
 
     public Vector3 RandomSupplyAmmoPoint()
     {
@@ -211,6 +214,36 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    private void HandleGameOver()
+    {
+        stateGame = StateGame.OnGameOver;
+        ShowMenu(MenuChoose.GameOverMenu);
+        DestructibleAllPlayerAndEnemy();
+    }
+
+    public void CheckGameOver(int currentLifeObject, GameObject myobject)
+    {
+        if (stateGame != StateGame.OnGame || currentLifeObject > 0) return;
+        switch (myobject.layer)
+        {
+            case 8:
+                HandleGameOver();
+                Debug.Log("Player has lose");
+                break;
+            case 7:
+            {
+                _destructibleObjects.Remove(myobject);
+                Destroy(myobject);
+                if (_destructibleObjects.Count < 2)
+                {
+                    HandleGameOver();
+                    Debug.Log("Player has win");
+                }
+
+                break;
+            }
+        }
+    }
 
     #region OnClick Functions
 

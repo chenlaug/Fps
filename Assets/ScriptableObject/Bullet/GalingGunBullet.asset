@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GalingGunBullet
   m_EditorClassIdentifier: 
   damage: 50
-  speed: 2500
+  speed: 3000

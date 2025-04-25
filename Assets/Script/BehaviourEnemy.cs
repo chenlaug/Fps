@@ -9,7 +9,7 @@ public class BehaviourEnemy : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private GameObject weaponSimple;
     [SerializeField] private GameObject weaponMultiple;
-    [SerializeField] private Transform player;
+    [SerializeField] private Transform playerPositionTransform;
     [SerializeField] private LayerMask ground;
     [SerializeField] private LayerMask playerMask;
 
@@ -24,7 +24,7 @@ public class BehaviourEnemy : MonoBehaviour
     private bool _playerIsInAttackRange;
     private BehaviourWeapon _behavioursWeapon;
     private Vector3 _supplyAmmoPoints;
-    [SerializeField] Image healthBar;
+    [SerializeField] private Image healthBar;
 
     private void Awake()
     {
@@ -39,6 +39,7 @@ public class BehaviourEnemy : MonoBehaviour
 
     private void SetUpEnemy()
     {
+        playerPositionTransform = GameManager.Instance.PlayerSpawn.transform;
         agent.speed = baseEnemy.baseSpeed;
         agent.angularSpeed = baseEnemy.baseAngularSpeed;
         agent.acceleration = baseEnemy.baseAcceleration;
@@ -90,17 +91,19 @@ public class BehaviourEnemy : MonoBehaviour
     {
         _playerIsinSight = Physics.CheckSphere(gameObject.transform.position, SightRange, playerMask);
         _playerIsInAttackRange = Physics.CheckSphere(gameObject.transform.position, AttackRange, playerMask);
+        Debug.Log($"[Enemy] PlayerInSight: {_playerIsinSight}, InAttackRange: {_playerIsInAttackRange}");
+
     }
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        agent.SetDestination(playerPositionTransform.position);
     }
 
     private void AttackPlayer()
     {
         agent.SetDestination(gameObject.transform.position);
-        gameObject.transform.LookAt(player.position);
+        gameObject.transform.LookAt(playerPositionTransform.position);
         _behavioursWeapon.ShootEnemy();
     }
 
@@ -131,6 +134,7 @@ public class BehaviourEnemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        healthBar.fillAmount = (float)currentHealth / (float)baseEnemy.baseHealth;
+        healthBar.fillAmount = currentHealth / (float)baseEnemy.baseHealth;
+        GameManager.Instance.CheckGameOver(currentHealth, gameObject);
     }
 }
