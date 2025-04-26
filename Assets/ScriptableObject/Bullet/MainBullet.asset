@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MainBullet
   m_EditorClassIdentifier: 
   damage: 10
-  speed: 2000
+  speed: 1500

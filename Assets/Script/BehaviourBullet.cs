@@ -3,6 +3,7 @@ using UnityEngine;
 public class BehaviourBullet : MonoBehaviour
 {
     [SerializeField] private BaseBullet bullet;
+    private GameObject _owner;
 
     private Vector3 _direction;
 
@@ -21,6 +22,7 @@ public class BehaviourBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        if (other.transform.root.gameObject == _owner) return;
         switch (other.gameObject.layer)
         {
             case 6: // Map
@@ -35,5 +37,10 @@ public class BehaviourBullet : MonoBehaviour
                 Destroy(gameObject);
                 break;
         }
+    }
+    
+    public void SetOwner(GameObject owner)
+    {
+        _owner = owner;
     }
 }

@@ -7,10 +7,13 @@ using Random = UnityEngine.Random;
 
 public class BehaviourWeapon : MonoBehaviour
 {
+    [Header("GameObject")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private GameObject cannonWeapon;
-    [SerializeField] private BaseWeapon baseWeapon;
     [SerializeField] private GameObject pivotWeapon;
+    [SerializeField] private GameObject owner;
+    
+    [SerializeField] private BaseWeapon baseWeapon;
     [SerializeField] private TextMeshProUGUI numberBulletUI;
     private int _chamberSize;
     private int _chamberCurrent;
@@ -44,13 +47,19 @@ public class BehaviourWeapon : MonoBehaviour
     private void CreateBullet()
     {
         if (_chamberCurrent <= 0) return;
+
         GameObject bullet = Instantiate(bulletPrefab);
         Transform cannonTransform = cannonWeapon.transform;
         bullet.transform.position = cannonTransform.position;
-        bullet.GetComponent<BehaviourBullet>().Direction = cannonTransform.up;
+    
+        BehaviourBullet behaviourBullet = bullet.GetComponent<BehaviourBullet>();
+        behaviourBullet.Direction = cannonTransform.up;
+        behaviourBullet.SetOwner(owner);
+
         _chamberCurrent--;
     }
 
+    
     private void Reload()
     {
         if (_chamberCurrent >= _chamberSize || NumberBulletLeft <= 0)
