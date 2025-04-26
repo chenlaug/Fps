@@ -123,8 +123,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2700617730588323564, guid: e785975dc0f13fe4e9c01db093dc2e8f, type: 3}
   cannonWeapon: {fileID: 6047804791992608877}
-  baseWeapon: {fileID: 11400000, guid: 675ad4828d0b1e44f98133724d5ef29c, type: 2}
   pivotWeapon: {fileID: 6279038237718505434}
+  owner: {fileID: 5588430775303184751}
+  baseWeapon: {fileID: 11400000, guid: 675ad4828d0b1e44f98133724d5ef29c, type: 2}
   numberBulletUI: {fileID: 0}
 --- !u!1 &3759854638796346222
 GameObject:
@@ -309,7 +310,7 @@ MonoBehaviour:
   agent: {fileID: 699722724955185603}
   weaponSimple: {fileID: 8369444968469400675}
   weaponMultiple: {fileID: 2305827370813833862}
-  player: {fileID: 8064645065235621299, guid: 22df41556e7140542bfac9332079c9ce, type: 3}
+  playerPositionTransform: {fileID: 0}
   ground:
     serializedVersion: 2
     m_Bits: 64
@@ -752,8 +753,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2700617730588323564, guid: fe3c3670c27091d42ab702dda555753f, type: 3}
   cannonWeapon: {fileID: 5798385670792285065}
-  baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
   pivotWeapon: {fileID: 6279038237718505434}
+  owner: {fileID: 5588430775303184751}
+  baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
   numberBulletUI: {fileID: 0}
 --- !u!1 &8412299752285819352
 GameObject:

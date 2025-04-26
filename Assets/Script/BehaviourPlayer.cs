@@ -22,7 +22,7 @@ public class BehaviourPlayer : MonoBehaviour
 
     private const float LimitRotationX = 70.0f;
     private const float MoveSpeed = 10.0f;
-    private const int BaseLife = 1000000000;
+    private const int BaseLife = 1000;
     private int _currentLife;
     [SerializeField] private Image healthBar;
 
@@ -110,6 +110,7 @@ public class BehaviourPlayer : MonoBehaviour
     {
         _currentLife -= damage;
         healthBar.fillAmount = (float)_currentLife / (float)BaseLife;
+        Debug.Log("Player take damage: " + damage);
         GameManager.Instance.CheckGameOver(_currentLife, gameObject);
         GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.HitMarker);
     }
