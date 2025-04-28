@@ -35,9 +35,9 @@ public class BehaviourPlayer : MonoBehaviour
         _currentLife = BaseLife;
     }
 
-    private void start()
+    private void Start()
     {
-        if (view.IsMine)
+        if (!view.IsMine)
         {
             playerCamera.enabled = false;
         }

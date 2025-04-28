@@ -5,7 +5,6 @@ using Random = UnityEngine.Random;
 using TMPro;
 using System.Linq;
 using Photon.Pun;
-using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
