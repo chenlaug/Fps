@@ -94,7 +94,11 @@ public class BehaviourWeapon : MonoBehaviour
 
     private void ManualReload()
     {
-        if (Input.GetMouseButtonDown(1)) Reload();
+        if (Input.GetMouseButtonDown(1))
+        {
+            viewWeapon.RPC(nameof(RPC_Reload),RpcTarget.All);
+            //Reload();
+        }
     }
 
     private void ShootPlayer()
@@ -103,13 +107,15 @@ public class BehaviourWeapon : MonoBehaviour
             return; // 8 isn't the player and not in game
         if (Input.GetMouseButtonDown(0) && baseWeapon.weaponType == WeaponType.SimpleShoot)
         {
+            viewWeapon.RPC(nameof(RPC_CreateBullet),RpcTarget.All);
             GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.FireSimple);
-            CreateBullet();
+          //  CreateBullet();
         }
         else if (Input.GetMouseButton(0) && baseWeapon.weaponType == WeaponType.MultipleShoot && !_bulletIsCreate)
         {
+            viewWeapon.RPC(nameof(RPC_MultipleShootCoroutine), RpcTarget.All);
             GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.FireSimple);
-            StartCoroutine(MultipleShootCoroutine());
+           // StartCoroutine(MultipleShootCoroutine());
         }
     }
 
@@ -144,6 +150,29 @@ public class BehaviourWeapon : MonoBehaviour
         }
     }
 
+    #region RPC
+    
+    [PunRPC]
+    private void RPC_CreateBullet()
+    {
+        CreateBullet();
+    } 
+    
+    [PunRPC]
+    private void RPC_Reload()
+    {
+        Reload();
+    }
+
+    [PunRPC]
+    private void RPC_MultipleShootCoroutine()
+    {
+        StartCoroutine(MultipleShootCoroutine());
+    }
+    #endregion
+    
+    #region IEnumerator
+
     private IEnumerator MultipleShootCoroutine()
     {
         CreateBullet();
@@ -170,4 +199,6 @@ public class BehaviourWeapon : MonoBehaviour
             _enemyIsAiming = false;
         }
     }
+
+    #endregion
 }

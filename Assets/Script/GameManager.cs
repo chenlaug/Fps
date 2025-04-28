@@ -63,14 +63,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject enemyPrefab;
 
+    [Header("Photon")]
+    [SerializeField] private PhotonView photonView;
     private static GameManager _gameManagerInstance;
     [HideInInspector] public StateGame stateGame = StateGame.OnStart;
 
     private void Awake()
     {
-        SpawnPlayerMulti();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            AssignSpawns();
+        }
         PlayAudioWanted(AudioToPlay.MainTheme);
     }
+
     
     private void Start()
     {
@@ -193,14 +199,34 @@ public class GameManager : MonoBehaviour
             spawnPointsTemps.RemoveAt(randomPosition);
         }
     }
+    private void AssignSpawns()
+    {
+        List<Transform> availableSpawns = spawnPointTransforms.ToList();
+        var players = PhotonNetwork.PlayerList;
 
-    private void SpawnPlayerMulti()
+        foreach (var player in players)
+        {
+            if (availableSpawns.Count == 0)
+            {
+                Debug.LogWarning("Not enough spawn points !");
+                return;
+            }
+
+            int randomIndex = Random.Range(0, availableSpawns.Count);
+            Vector3 spawnPosition = availableSpawns[randomIndex].position;
+            availableSpawns.RemoveAt(randomIndex);
+
+            photonView.RPC(nameof(SpawnAtPosition), player, spawnPosition);
+        }
+    }
+
+   /* private void SpawnPlayerMulti()
     {
         List<Transform> spawnPointsTemps = spawnPointTransforms.ToList();
         int randomPosition = Random.Range(0, spawnPointsTemps.Count);
         PhotonNetwork.Instantiate(playerPrefab.name,spawnPointsTemps[randomPosition].position,Quaternion.identity);
         spawnPointsTemps.RemoveAt(randomPosition);
-    }
+    }*/
     
     private void HandleStart()
     {
@@ -338,6 +364,13 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+    
+    [PunRPC]
+    private void SpawnAtPosition(Vector3 position)
+    {
+        PhotonNetwork.Instantiate(playerPrefab.name, position, Quaternion.identity);
+    }
+
     
     #region OnClick Functions
 
