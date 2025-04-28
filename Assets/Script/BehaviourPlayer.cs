@@ -122,7 +122,7 @@ public class BehaviourPlayer : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _currentLife -= damage;
-        healthBar.fillAmount = (float)_currentLife / (float)BaseLife;
+        healthBar.fillAmount = _currentLife / (float)BaseLife;
         Debug.Log("Player take damage: " + damage);
         GameManager.Instance.CheckGameOver(_currentLife, gameObject);
         GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.HitMarker);

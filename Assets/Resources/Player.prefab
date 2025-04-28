@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 774054600091456403}
   - component: {fileID: 7452943019652970511}
   - component: {fileID: 1617040795845978672}
+  - component: {fileID: 4182914621231494265}
   m_Layer: 8
   m_Name: WeaponGatlingGun
   m_TagString: Untagged
@@ -127,6 +128,29 @@ MonoBehaviour:
   owner: {fileID: 5588430775303184751}
   baseWeapon: {fileID: 11400000, guid: 675ad4828d0b1e44f98133724d5ef29c, type: 2}
   numberBulletUI: {fileID: 6683992798214269120}
+  viewWeapon: {fileID: 4182914621231494265}
+--- !u!114 &4182914621231494265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2305827370813833862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3759854638796346222
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +345,8 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: -3176846897722181882}
+  - {fileID: -2985670064963089884}
+  - {fileID: 0}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -362,11 +388,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &-2985670064963089884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,9 +512,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8373610791796772321}
   - component: {fileID: 1622727286378512483}
+  - component: {fileID: 7002513945583350437}
   m_Layer: 8
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -561,6 +588,28 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &7002513945583350437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6279038237718505434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8095777754806566487
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,6 +742,7 @@ GameObject:
   - component: {fileID: 2944534828868656717}
   - component: {fileID: 327409325562240830}
   - component: {fileID: 2607420815035678947}
+  - component: {fileID: 7971733404058803544}
   m_Layer: 8
   m_Name: WeaponGun
   m_TagString: Untagged
@@ -807,6 +857,29 @@ MonoBehaviour:
   owner: {fileID: 5588430775303184751}
   baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
   numberBulletUI: {fileID: 6683992798214269120}
+  viewWeapon: {fileID: 7971733404058803544}
+--- !u!114 &7971733404058803544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8369444968469400675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8793067811509107382
 GameObject:
   m_ObjectHideFlags: 0

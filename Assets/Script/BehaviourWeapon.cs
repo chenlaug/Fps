@@ -1,5 +1,5 @@
-using System;
 using System.Collections;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,6 +15,9 @@ public class BehaviourWeapon : MonoBehaviour
     
     [SerializeField] private BaseWeapon baseWeapon;
     [SerializeField] private TextMeshProUGUI numberBulletUI;
+    
+    [Header("Photon")]
+    [SerializeField] private PhotonView viewWeapon;
     private int _chamberSize;
     private int _chamberCurrent;
     [HideInInspector] public int NumberBulletLeft { get; private set; }
@@ -31,6 +34,13 @@ public class BehaviourWeapon : MonoBehaviour
 
     private void Update()
     {
+        if (!viewWeapon.IsMine)
+            return;
+        HandleShoot();
+    }
+
+    private void HandleShoot()
+    {
         if (gameObject.layer == 8) // Player
         {
             if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
@@ -43,7 +53,7 @@ public class BehaviourWeapon : MonoBehaviour
             AutoReload();
         ShowNumberBullet();
     }
-
+    
     private void CreateBullet()
     {
         if (_chamberCurrent <= 0) return;
