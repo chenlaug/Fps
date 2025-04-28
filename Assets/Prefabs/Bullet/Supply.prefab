@@ -146,3 +146,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5d219ee18cffd4280a82450defd874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  behaviourEnemy: {fileID: 9146102323814574229, guid: 07af684456f317d45a0409440a63563f, type: 3}
+  behaviourPlayer: {fileID: 6225800097403508296, guid: 22df41556e7140542bfac9332079c9ce, type: 3}

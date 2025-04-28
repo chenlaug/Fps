@@ -127,6 +127,7 @@ MonoBehaviour:
   owner: {fileID: 5588430775303184751}
   baseWeapon: {fileID: 11400000, guid: 675ad4828d0b1e44f98133724d5ef29c, type: 2}
   numberBulletUI: {fileID: 6683992798214269120}
+  viewWeapon: {fileID: 0}
 --- !u!1 &3759854638796346222
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44edc70a7604c4f448a2716d3c3d0aa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 1622727286378512483}
+  playerCamera: {fileID: 1622727286378512483}
   characterController: {fileID: 6740708772871068141}
   groundCheck: {fileID: 6160577234277562702}
   groundMask:
@@ -295,7 +296,11 @@ MonoBehaviour:
   weapons:
   - {fileID: 8369444968469400675}
   - {fileID: 2305827370813833862}
+  messageEndText: {fileID: 0}
+  currentLife: 0
   healthBar: {fileID: 9062578193574192536}
+  ammoInfoGameObject: {fileID: 0}
+  playerView: {fileID: 0}
 --- !u!1 &5798385670792285065
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,6 +725,7 @@ MonoBehaviour:
   owner: {fileID: 5588430775303184751}
   baseWeapon: {fileID: 11400000, guid: 990ef2062d30d83429e0f36a085ec122, type: 2}
   numberBulletUI: {fileID: 6683992798214269120}
+  viewWeapon: {fileID: 0}
 --- !u!1 &8793067811509107382
 GameObject:
   m_ObjectHideFlags: 0

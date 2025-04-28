@@ -45,6 +45,9 @@ MonoBehaviour:
   - RPC_CreateBullet
   - RPC_MultipleShootCoroutine
   - RPC_PlayShootSound
+  - RPC_TakeDamage
+  - RPC_ShowEndMessage
+  - RPC_EndGame
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -5082,6 +5082,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOpen: 0
   menuType: 5
+--- !u!1 &1699794814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1699794816}
+  - component: {fileID: 1699794815}
+  m_Layer: 0
+  m_Name: InfoGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1699794815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699794814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b70ddd11d352574b94ad1cff4e99791, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocal: 0
+--- !u!4 &1699794816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699794814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1737636534
 GameObject:
   m_ObjectHideFlags: 0
@@ -5533,7 +5578,7 @@ GameObject:
   - component: {fileID: 2020537711}
   - component: {fileID: 2020537710}
   m_Layer: 5
-  m_Name: LocalPlay
+  m_Name: OnlinePlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5602,7 +5647,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2020537711}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1122158449}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: OpenMenuChosen
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1267765517}
+          m_ObjectArgumentAssemblyTypeName: Menu, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2020537711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5748,7 +5805,7 @@ GameObject:
   - component: {fileID: 2068815383}
   - component: {fileID: 2068815382}
   m_Layer: 5
-  m_Name: OnlinePlay
+  m_Name: LocalPlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5817,7 +5874,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2068815383}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1699794815}
+        m_TargetAssemblyTypeName: InfoGame, Assembly-CSharp
+        m_MethodName: OnClickInfo
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1202276508}
+        m_TargetAssemblyTypeName: NetworkManager, Assembly-CSharp
+        m_MethodName: OnClickLoadLocalScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &2068815383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5866,3 +5947,4 @@ SceneRoots:
   - {fileID: 1737636537}
   - {fileID: 1122158450}
   - {fileID: 1202276509}
+  - {fileID: 1699794816}

@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using TMPro;
 using System.Linq;
 using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -70,9 +73,16 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (!InfoGame.Instance.isLocal)
         {
-            AssignSpawns();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                AssignSpawnsMultiPlayer();
+            }    
+        }
+        else
+        {
+               ShowMenu(MenuChoose.StartMenu); 
         }
         PlayAudioWanted(AudioToPlay.MainTheme);
     }
@@ -80,7 +90,10 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        stateGame = StateGame.OnGame;
+        if (!InfoGame.Instance.isLocal)
+        {
+            stateGame = StateGame.OnGame;
+        }
         ShowCursor();
     }
 
@@ -199,7 +212,7 @@ public class GameManager : MonoBehaviour
             spawnPointsTemps.RemoveAt(randomPosition);
         }
     }
-    private void AssignSpawns()
+    private void AssignSpawnsMultiPlayer()
     {
         List<Transform> availableSpawns = spawnPointTransforms.ToList();
         var players = PhotonNetwork.PlayerList;
@@ -219,14 +232,6 @@ public class GameManager : MonoBehaviour
             photonView.RPC(nameof(SpawnAtPosition), player, spawnPosition);
         }
     }
-
-   /* private void SpawnPlayerMulti()
-    {
-        List<Transform> spawnPointsTemps = spawnPointTransforms.ToList();
-        int randomPosition = Random.Range(0, spawnPointsTemps.Count);
-        PhotonNetwork.Instantiate(playerPrefab.name,spawnPointsTemps[randomPosition].position,Quaternion.identity);
-        spawnPointsTemps.RemoveAt(randomPosition);
-    }*/
     
     private void HandleStart()
     {
@@ -364,13 +369,37 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
+    public void HandleMultiEndGame()
+    {
+        StartCoroutine(BackToMainMenu());
+    }
+
+    private IEnumerator BackToMainMenu()
+    {
+        yield return new WaitForSeconds(5.0f);
+        BehaviourPlayer[] players = GameObject.FindObjectsOfType<BehaviourPlayer>();
+        if (players.Length <= 0) yield break;
+        foreach (BehaviourPlayer bp in players)
+        {
+            bp?.Disconnect();
+            while (PhotonNetwork.IsConnected)
+            {
+                yield return null;
+            }
+        }
+        SceneManager.LoadScene(0);
+    }
     
+    #region Rpc
+
     [PunRPC]
     private void SpawnAtPosition(Vector3 position)
     {
         PhotonNetwork.Instantiate(playerPrefab.name, position, Quaternion.identity);
     }
 
+    #endregion
     
     #region OnClick Functions
 

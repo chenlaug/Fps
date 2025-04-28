@@ -5,6 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
@@ -201,5 +202,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public void StarGame()
     {
         PhotonNetwork.LoadLevel(1);
+    }
+
+    public void OnClickLoadLocalScene()
+    {
+        SceneManager.LoadScene(1);
     }
 }

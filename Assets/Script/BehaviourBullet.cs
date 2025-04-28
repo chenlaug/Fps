@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class BehaviourBullet : MonoBehaviour
@@ -33,12 +34,19 @@ public class BehaviourBullet : MonoBehaviour
                 Destroy(gameObject);
                 break;
             case 8: // Player
-                other.gameObject.GetComponentInParent<BehaviourPlayer>().TakeDamage(bullet.damage);
+                if (!InfoGame.Instance.isLocal)
+                {
+                    other.gameObject.GetComponentInParent<BehaviourPlayer>().playerView.RPC("RPC_TakeDamage",RpcTarget.All,bullet.damage);
+                }
+                else
+                {
+                    other.gameObject.GetComponentInParent<BehaviourPlayer>().TakeDamage(bullet.damage);
+                }
                 Destroy(gameObject);
                 break;
         }
     }
-    
+
     public void SetOwner(GameObject owner)
     {
         _owner = owner;

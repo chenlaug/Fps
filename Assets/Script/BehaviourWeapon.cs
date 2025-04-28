@@ -2,22 +2,21 @@ using System.Collections;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class BehaviourWeapon : MonoBehaviour
 {
-    [Header("GameObject")]
-    [SerializeField] private GameObject bulletPrefab;
+    [Header("GameObject")] [SerializeField]
+    private GameObject bulletPrefab;
+
     [SerializeField] private GameObject cannonWeapon;
     [SerializeField] private GameObject pivotWeapon;
     [SerializeField] private GameObject owner;
-    
+
     [SerializeField] private BaseWeapon baseWeapon;
     [SerializeField] private TextMeshProUGUI numberBulletUI;
-    
-    [Header("Photon")]
-    [SerializeField] private PhotonView viewWeapon;
+
+    [Header("Photon")] [SerializeField] private PhotonView viewWeapon;
     private int _chamberSize;
     private int _chamberCurrent;
     public int NumberBulletLeft { get; private set; }
@@ -34,8 +33,12 @@ public class BehaviourWeapon : MonoBehaviour
 
     private void Update()
     {
-        if (!viewWeapon.IsMine)
-            return;
+        if (!InfoGame.Instance.isLocal)
+        {
+            if (!viewWeapon.IsMine)
+                return;   
+        }
+        
         HandleShoot();
     }
 
@@ -53,7 +56,7 @@ public class BehaviourWeapon : MonoBehaviour
             AutoReload();
         ShowNumberBullet();
     }
-    
+
     private void CreateBullet()
     {
         if (_chamberCurrent <= 0) return;
@@ -61,7 +64,7 @@ public class BehaviourWeapon : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab);
         Transform cannonTransform = cannonWeapon.transform;
         bullet.transform.position = cannonTransform.position;
-    
+
         BehaviourBullet behaviourBullet = bullet.GetComponent<BehaviourBullet>();
         behaviourBullet.Direction = cannonTransform.up;
         behaviourBullet.SetOwner(owner);
@@ -69,7 +72,7 @@ public class BehaviourWeapon : MonoBehaviour
         _chamberCurrent--;
     }
 
-    
+
     private void Reload()
     {
         if (_chamberCurrent >= _chamberSize || NumberBulletLeft <= 0)
@@ -84,7 +87,15 @@ public class BehaviourWeapon : MonoBehaviour
 
     private void AutoReload()
     {
-        if (_chamberCurrent <= 0 && NumberBulletLeft > 0) Reload();
+        if (_chamberCurrent <= 0 && NumberBulletLeft > 0)
+            if (InfoGame.Instance.isLocal)
+            {
+                Reload();
+            }
+            else
+            {
+                viewWeapon.RPC(nameof(RPC_Reload), RpcTarget.All);
+            }
     }
 
     public void ResetAmmo()
@@ -96,8 +107,14 @@ public class BehaviourWeapon : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            viewWeapon.RPC(nameof(RPC_Reload),RpcTarget.All);
-            //Reload();
+            if (InfoGame.Instance.isLocal)
+            {
+                Reload();
+            }
+            else
+            {
+                viewWeapon.RPC(nameof(RPC_Reload), RpcTarget.All);
+            }
         }
     }
 
@@ -107,15 +124,27 @@ public class BehaviourWeapon : MonoBehaviour
             return; // 8 isn't the player and not in game
         if (Input.GetMouseButtonDown(0) && baseWeapon.weaponType == WeaponType.SimpleShoot)
         {
-            viewWeapon.RPC(nameof(RPC_CreateBullet),RpcTarget.All);
             GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.FireSimple);
-          //  CreateBullet();
+            if (!InfoGame.Instance.isLocal)
+            {
+                viewWeapon.RPC(nameof(RPC_CreateBullet), RpcTarget.All);
+            }
+            else
+            {
+                CreateBullet();
+            }
         }
         else if (Input.GetMouseButton(0) && baseWeapon.weaponType == WeaponType.MultipleShoot && !_bulletIsCreate)
         {
-            viewWeapon.RPC(nameof(RPC_MultipleShootCoroutine), RpcTarget.All);
             GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.FireSimple);
-           // StartCoroutine(MultipleShootCoroutine());
+            if (!InfoGame.Instance.isLocal)
+            {
+                viewWeapon.RPC(nameof(RPC_MultipleShootCoroutine), RpcTarget.All);
+            }
+            else
+            {
+                StartCoroutine(MultipleShootCoroutine());
+            }
         }
     }
 
@@ -126,6 +155,7 @@ public class BehaviourWeapon : MonoBehaviour
         {
             StartCoroutine(RadomAim());
         }
+
         switch (baseWeapon.weaponType)
         {
             case WeaponType.SimpleShoot when !_bulletIsCreate:
@@ -151,13 +181,13 @@ public class BehaviourWeapon : MonoBehaviour
     }
 
     #region RPC
-    
+
     [PunRPC]
     private void RPC_CreateBullet()
     {
         CreateBullet();
-    } 
-    
+    }
+
     [PunRPC]
     private void RPC_Reload()
     {
@@ -169,8 +199,9 @@ public class BehaviourWeapon : MonoBehaviour
     {
         StartCoroutine(MultipleShootCoroutine());
     }
+
     #endregion
-    
+
     #region IEnumerator
 
     private IEnumerator MultipleShootCoroutine()
