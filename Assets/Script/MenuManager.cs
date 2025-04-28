@@ -14,8 +14,8 @@ public class MenuManager : MonoBehaviour
             {
                 MenuManagerInstance = FindObjectOfType(typeof(MenuManager)) as MenuManager;
             }
-            return MenuManagerInstance;
 
+            return MenuManagerInstance;
         }
     }
 
@@ -61,6 +61,16 @@ public class MenuManager : MonoBehaviour
                 CloseMenu(menu.menuType);
             }
         }
+
         menuChosen.Open();
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
