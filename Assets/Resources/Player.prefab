@@ -342,10 +342,11 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 3
   OwnershipTransfer: 0
-  observableSearch: 2
+  observableSearch: 0
   ObservedComponents:
   - {fileID: -3176846897722181882}
   - {fileID: -2985670064963089884}
+  - {fileID: 6225800097403508296}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -390,7 +391,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &-2985670064963089884
 MonoBehaviour:

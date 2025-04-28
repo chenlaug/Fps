@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class BehaviourPlayer : MonoBehaviour
+public class BehaviourPlayer : MonoBehaviour, IPunObservable
 {
     [SerializeField] private Camera playerCamera;
     [SerializeField] private CharacterController characterController;
@@ -126,5 +126,19 @@ public class BehaviourPlayer : MonoBehaviour
         Debug.Log("Player take damage: " + damage);
         GameManager.Instance.CheckGameOver(_currentLife, gameObject);
         GameManager.Instance.PlayAudioWanted(GameManager.AudioToPlay.HitMarker);
+    }
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(weapons[0].activeSelf);
+            stream.SendNext(weapons[1].activeSelf);
+        }
+        else
+        {
+            weapons[0].SetActive((bool)stream.ReceiveNext());
+            weapons[1].SetActive((bool)stream.ReceiveNext());
+        }
     }
 }
