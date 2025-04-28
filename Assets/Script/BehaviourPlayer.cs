@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BehaviourPlayer : MonoBehaviour
 {
-    [SerializeField] private new Camera camera;
+    [SerializeField] private Camera playerCamera;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private GameObject groundCheck;
     [SerializeField] private LayerMask groundMask;
@@ -48,7 +48,7 @@ public class BehaviourPlayer : MonoBehaviour
         _xRotation -= mouseY;
         _xRotation = Mathf.Clamp(_xRotation, -LimitRotationX, LimitRotationX);
 
-        camera.transform.localRotation = Quaternion.Euler(_xRotation, 0.0f, 0.0f);
+        playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, 0.0f, 0.0f);
         gameObject.transform.Rotate(Vector3.up * mouseX);
     }
 

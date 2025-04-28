@@ -1,24 +1,30 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    private static MenuManager MenuMangerInstance;
+    private static MenuManager MenuManagerInstance;
 
     public static MenuManager Instance
     {
         get
         {
-            if (MenuMangerInstance == null)
+            if (MenuManagerInstance == null)
             {
-                MenuMangerInstance = FindObjectOfType(typeof(MenuManager)) as MenuManager;
+                MenuManagerInstance = FindObjectOfType(typeof(MenuManager)) as MenuManager;
             }
+            return MenuManagerInstance;
 
-            return MenuMangerInstance;
         }
     }
 
     [SerializeField] private List<Menu> menus = new List<Menu>();
+
+    private void Awake()
+    {
+        OpenMenu(MenuType.MainMenu);
+    }
 
     public void OpenMenu(MenuType menuType)
     {
@@ -43,14 +49,10 @@ public class MenuManager : MonoBehaviour
             {
                 menu.Close();
             }
-            else
-            {
-                menu.Open();
-            }
         }
     }
 
-    public void OpenMenu(Menu m)
+    public void OpenMenuChosen(Menu menuChosen)
     {
         foreach (var menu in menus)
         {
@@ -58,7 +60,7 @@ public class MenuManager : MonoBehaviour
             {
                 CloseMenu(menu.menuType);
             }
-            menu.Open();
         }
+        menuChosen.Open();
     }
 }
