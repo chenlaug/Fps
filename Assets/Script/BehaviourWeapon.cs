@@ -20,7 +20,7 @@ public class BehaviourWeapon : MonoBehaviour
     [SerializeField] private PhotonView viewWeapon;
     private int _chamberSize;
     private int _chamberCurrent;
-    [HideInInspector] public int NumberBulletLeft { get; private set; }
+    public int NumberBulletLeft { get; private set; }
 
     private bool _bulletIsCreate;
     private bool _enemyIsAiming;
