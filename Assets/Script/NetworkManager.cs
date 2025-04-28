@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Pun;
@@ -38,6 +39,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
             return _instance;
         }
+    }
+
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     private void Start()

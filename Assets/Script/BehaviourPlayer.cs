@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -25,14 +26,26 @@ public class BehaviourPlayer : MonoBehaviour
     private const int BaseLife = 1000;
     private int _currentLife;
     [SerializeField] private Image healthBar;
+    
+    [Header("Photon")]
+    [SerializeField] private PhotonView view;
 
     private void Awake()
     {
         _currentLife = BaseLife;
     }
 
+    private void start()
+    {
+        if (view.IsMine)
+        {
+            playerCamera.enabled = false;
+        }
+    }
     private void Update()
     {
+        if (!view.IsMine)
+            return;
         BehaviourPlayerLook();
         BehaviourPlayerMove();
         CheckGround();

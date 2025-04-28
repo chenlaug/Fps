@@ -4,6 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using TMPro;
 using System.Linq;
+using Photon.Pun;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
@@ -68,11 +69,13 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        SpawnPlayerMulti();
         PlayAudioWanted(AudioToPlay.MainTheme);
     }
-
+    
     private void Start()
     {
+        stateGame = StateGame.OnGame;
         ShowCursor();
     }
 
@@ -192,6 +195,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void SpawnPlayerMulti()
+    {
+        List<Transform> spawnPointsTemps = spawnPointTransforms.ToList();
+        int randomPosition = Random.Range(0, spawnPointsTemps.Count);
+        PhotonNetwork.Instantiate(playerPrefab.name,spawnPointsTemps[randomPosition].position,Quaternion.identity);
+        spawnPointsTemps.RemoveAt(randomPosition);
+    }
+    
     private void HandleStart()
     {
         PlayAudioWanted(AudioToPlay.Click);
@@ -328,6 +339,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+    
     #region OnClick Functions
 
     public void OnClickStart()
