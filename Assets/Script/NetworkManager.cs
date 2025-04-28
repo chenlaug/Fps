@@ -13,6 +13,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private TMP_Text roomNameText;
     [SerializeField] private Transform roomListContent;
     [SerializeField] private GameObject roomListItemPrefab;
+
+    [Header("PlayerInfo")] 
+    [SerializeField] private Transform playerListContent;
+    [SerializeField] private TMP_InputField playerNameText;
+    [SerializeField] private GameObject playerListItemPrefab;
+
+
     [SerializeField] private GameObject startGameButton;
     private static NetworkManager _instance;
 
