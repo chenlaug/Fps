@@ -83,7 +83,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             return;
         }
         SetName();
-        PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 4, IsVisible = true, IsOpen = true });
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 2, IsVisible = true, IsOpen = true });
         MenuManager.Instance.OpenMenu(MenuType.LoadingScreen);
     }
 
